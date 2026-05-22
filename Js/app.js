@@ -17,6 +17,7 @@ const state = {
   maxScore: 100,
   totalQuestions: 10,
   topic: 'all',
+  source: 'page-question',
 };
 
 /* ===== QUESTION BANK ===== */
@@ -226,12 +227,21 @@ function goPage(id) {
   const target = document.getElementById(id);
   target.classList.add('active');
   state.currentPage = id;
-
-  if (id === 'page-question') {
+if (id === 'page-question') {
+    state.source = 'page-question';
     startQuiz();
   }
   if (id === 'page-results') {
     showResults();
+  }
+if (id === 'page-cone') {
+    state.source = 'page-cone';
+    coneState.qIndex = 0;
+    coneState.score = 0;
+    coneState.correct = 0;
+    coneState.wrong = 0;
+    coneState.startTime = Date.now();
+    loadConeQuestion();
   }
 }
 
@@ -298,10 +308,11 @@ function renderQuestion(q) {
 function renderVisual(v) {
   if (!v) return '';
   switch (v.kind) {
-   case 'rectangle': {
-  const scale = 14;
-  const pw = Math.min(300, Math.max(100, v.l * scale));
-  const ph = Math.min(200, Math.max(60, v.w * scale));
+case 'rectangle': {
+  const isMobile = window.innerWidth <= 600;
+  const scale = isMobile ? 8 : 16;
+  const pw = Math.min(isMobile ? 200 : 300, Math.max(80, v.l * scale));
+  const ph = Math.min(isMobile ? 130 : 200, Math.max(50, v.w * scale));
       return `
         <div class="rect-visual">
           <div class="rect-label-top">${v.l}m</div>
@@ -314,7 +325,7 @@ function renderVisual(v) {
     case 'equation': {
       return `
         <div class="fraction-visual">
-          <div style="font-size:clamp(78px,6vw,148px);font-weight:900;color:#1a2a5e;font-family:'Poppins',sans-serif;letter-spacing:2px;">
+          <div style="font-size:clamp(78px,10vw,200px);font-weight:900;color:#1a2a5e;font-family:'Poppins',sans-serif;letter-spacing:2px;">
             ${v.expr}
           </div>
         </div>`;
@@ -415,13 +426,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Shuffle btn
 document.getElementById('shuffleBtn').addEventListener('click', () => {
-    if (state.answered) return;
+    state.answered = false;
+    const old = document.getElementById('solutionBox');
+    if (old) old.remove();
     const currentQ = state.questions[state.currentQIndex];
     const sameTypeTemplate = questionTemplates.find(t => t.type === currentQ.type);
     if (sameTypeTemplate) {
       state.questions[state.currentQIndex] = sameTypeTemplate.generate();
     }
     loadQuestion();
+
+    // Highlight correct answer after render
+    setTimeout(() => {
+      const newQ = state.questions[state.currentQIndex];
+      const allBtns = document.querySelectorAll('#optionsList .option-btn');
+      allBtns.forEach(b => {
+        if (String(b.textContent.trim()) === String(newQ.answer)) {
+          b.classList.add('correct');
+        }
+      });
+    }, 50);
   });
 
   // Solution btn
@@ -431,16 +455,77 @@ document.getElementById('solutionBtn').addEventListener('click', () => {
     showSolutionBox(q);
   });
   // Replay btn
-  document.getElementById('replayBtn').addEventListener('click', () => {
-    goPage('page-question');
+document.getElementById('replayBtn').addEventListener('click', () => {
+    goPage(state.source);
   });
 
-  // Continue btn
   document.getElementById('continueBtn').addEventListener('click', () => {
     goPage('page-landing');
   });
-});
 
+  // ===== CONE BUTTONS =====
+document.getElementById('coneCheckBtn').addEventListener('click', () => {
+    const input = document.getElementById('coneInput').value.trim();
+    const correct = coneState.answer(coneState.current.n, coneState.current.d);
+    const fb = document.getElementById('coneFeedback');
+
+    if (input === correct || input === `${coneState.current.n}/${coneState.current.d}`) {
+      fb.textContent = '✅ Correct! Well done!';
+      fb.className = 'cone-feedback correct';
+      document.getElementById('coneInput').style.borderColor = 'var(--green)';
+      const pts = Math.floor(coneState.maxScore / coneState.totalQuestions);
+      coneState.score = Math.min(coneState.maxScore, coneState.score + pts);
+      coneState.correct++;
+    } else {
+      fb.textContent = `❌ Wrong! Correct answer is ${correct}`;
+      fb.className = 'cone-feedback wrong';
+      document.getElementById('coneInput').style.borderColor = 'var(--red)';
+      coneState.wrong++;
+    }
+
+    updateConeScoreDisplay();
+
+    setTimeout(() => {
+      coneState.qIndex++;
+      loadConeQuestion();
+    }, 1400);
+  });
+
+  document.getElementById('coneShuffleBtn').addEventListener('click', () => {
+    loadConeQuestion();
+  });
+
+  document.getElementById('coneSolutionBtn').addEventListener('click', () => {
+    const old = document.getElementById('coneSolutionBox');
+    if (old) old.remove();
+    const box = document.createElement('div');
+    box.id = 'coneSolutionBox';
+    box.className = 'solution-box';
+    box.innerHTML = `
+      <div class="solution-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#7c6fed" stroke-width="2">
+          <rect x="8" y="2" width="8" height="4" rx="1"/>
+          <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </div>
+      <div class="solution-text-wrap">
+        <div class="solution-title-row">
+          <div class="solution-title">Solution</div>
+          <button class="solution-next-btn" id="coneNextBtn">Next Question →</button>
+        </div>
+       <div class="solution-body">${coneState.solution(coneState.current.n, coneState.current.d)}</div>
+      </div>`;
+    const qMain = document.querySelector('#page-cone .question-main');
+    qMain.appendChild(box);
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    document.getElementById('coneNextBtn').addEventListener('click', () => {
+      coneState.qIndex++;
+      loadConeQuestion();
+    });
+  });
+
+});
 function generateSolutionText(q) {
   const v = q.visual;
   if (v && v.kind === 'rectangle') {
@@ -490,6 +575,141 @@ const qMain = document.querySelector('#page-question .question-main');
   qMain.appendChild(box);
 }
 
+/* ===== CONE SUBJECTIVE PAGE ===== */
+const coneState = {
+  qIndex: 0,
+  current: null,
+  solution: null,
+  answer: null,
+  score: 0,
+  correct: 0,
+  wrong: 0,
+  startTime: null,
+  totalQuestions: 10,
+  maxScore: 100,
+};
+
+const coneQuestions = [
+  {
+    title: 'Fractions – Subjective Dynamic Question',
+    generate() {
+      const d = [4,5,6,8,10][rand(0,4)];
+      const n = rand(1, d-1);
+      return { n, d,
+        text: `Observe the shaded fraction shown below. Write the fraction representing the shaded part in its simplest form.`,
+        solution(n,d) {
+          const g = gcd(n,d);
+          const sn = n/g, sd = d/g;
+          return `Number of shaded parts = ${n}<br>Total number of equal parts = ${d}<br>Fraction = ${n}/${d}<br>Simplest form = <strong>${sn}/${sd}</strong>`;
+        },
+        answer(n,d) {
+          const g = gcd(n,d); return `${n/g}/${d/g}`;
+        }
+      };
+    }
+  },
+  {
+    title: 'Number Line – Subjective Dynamic Question',
+    generate() {
+      const max = rand(5,10);
+      const val = rand(1,max-1);
+      return { n: val, d: max,
+        text: `Look at the number line below. What number is marked by the dot? Write as a fraction.`,
+        solution(n,d) {
+          return `The dot is placed at position ${n} on a number line from 0 to ${d}.<br>As a fraction = <strong>${n}/${d}</strong>`;
+        },
+        answer(n,d) { return `${n}/${d}`; }
+      };
+    }
+  }
+];
+
+function gcd(a,b) { return b === 0 ? a : gcd(b, a%b); }
+
+function loadConeQuestion() {
+  if (coneState.qIndex >= coneState.totalQuestions) {
+    // push cone results into main state so page 4 shows them
+    state.score = coneState.score;
+    state.correct = coneState.correct;
+    state.wrong = coneState.wrong;
+    state.startTime = coneState.startTime;
+    goPage('page-results');
+    return;
+  }
+
+  const template = coneQuestions[coneState.qIndex % coneQuestions.length];
+  const q = template.generate();
+  coneState.current = q;
+  coneState.solution = q.solution;
+  coneState.answer = q.answer;
+
+  const titleEl = document.getElementById('conePageTitle');
+  if (titleEl) titleEl.textContent = `Question ${coneState.qIndex + 1} of ${coneState.totalQuestions}`;
+
+  document.getElementById('coneQuestionText').textContent = q.text;
+  document.getElementById('coneInput').value = '';
+  document.getElementById('coneFeedback').textContent = '';
+  document.getElementById('coneFeedback').className = 'cone-feedback';
+  document.getElementById('coneInput').style.borderColor = '#adf3ff';
+
+  const oldSol = document.getElementById('coneSolutionBox');
+  if (oldSol) oldSol.remove();
+
+  updateConeScoreDisplay();
+
+  const visual = document.getElementById('coneVisual');
+  let html = '<div class="frac-bar-wrap" style="flex-wrap:wrap;gap:4px;justify-content:center;">';
+  for (let i = 0; i < q.d; i++) {
+    html += `<div class="frac-bar-cell ${i < q.n ? 'shaded' : 'empty'}"></div>`;
+  }
+  html += '</div>';
+  visual.innerHTML = html;
+}
+
+function updateConeScoreDisplay() {
+  const el = document.getElementById('coneScoreDisplay');
+  if (el) el.textContent = `${coneState.score} /100 pts`;
+}
+document.addEventListener('DOMContentLoaded', () => {
+ 
+
+  document.getElementById('coneShuffleBtn').addEventListener('click', () => {
+    loadConeQuestion();
+  });
+document.getElementById('coneSolutionBtn').addEventListener('click', () => {
+    const old = document.getElementById('coneSolutionBox');
+    if (old) old.remove();
+    const box = document.createElement('div');
+    box.id = 'coneSolutionBox';
+    box.className = 'solution-box';
+    box.innerHTML = `
+      <div class="solution-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#7c6fed" stroke-width="2">
+          <rect x="8" y="2" width="8" height="4" rx="1"/>
+          <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </div>
+      <div class="solution-text-wrap">
+        <div class="solution-title-row">
+          <div class="solution-title">Solution</div>
+          <button class="solution-next-btn" id="coneNextBtn">Next Question →</button>
+        </div>
+        <div class="solution-body">${coneState.solution(coneState.current.n, coneState.current.d)}</div>
+      </div>`;
+    box.className = 'solution-box';
+    const qMain = document.querySelector('#page-cone .question-main');
+    qMain.appendChild(box);
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    document.getElementById('coneNextBtn').addEventListener('click', () => {
+      coneState.qIndex++;
+      loadConeQuestion();
+    });
+  });
+});
+
+
 /* ===== RESULTS ===== */
 function showResults() {
   const elapsed = Math.floor((Date.now() - (state.startTime || Date.now())) / 1000);
@@ -523,3 +743,4 @@ function showResults() {
   document.getElementById('scoreStat').textContent = `${state.score} /100 pts`;
   document.getElementById('attemptStat').textContent = total;
 }
+

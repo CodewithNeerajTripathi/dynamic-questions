@@ -20,10 +20,10 @@
 </div>
       <div class="topbar-actions">
   <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
-    <img src="./Img/home_44428.svg" width="26" height="26" alt="Home" />
+    <img src="./Img/home_44428.svg" alt="Home" />
   </button>
   <button class="icon-btn-circle" id="soundBtn" aria-label="Sound">
-    <img src="./Img/high-volume_72596.svg" width="26" height="26" alt="Sound" />
+    <img src="./Img/high-volume_72596.svg" alt="Sound" />
   </button>
 </div>
     </header>
@@ -67,10 +67,10 @@
 </div>
     <div class="topbar-actions">
   <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
-    <img src="./Img/home_44428.svg" width="26" height="26" alt="Home" />
+    <img src="./Img/home_44428.svg" alt="Home" />
   </button>
   <button class="icon-btn-circle" aria-label="Sound">
-    <img src="./Img/high-volume_72596.svg" width="26" height="26" alt="Sound" />
+    <img src="./Img/high-volume_72596.svg" alt="Sound" />
   </button>
 </div>
     </header>
@@ -90,7 +90,7 @@
 </div>
         </div>
         <!-- Cone Card -->
-        <div class="shape-card" id="coneCard" onclick="startWithTopic('cone')" style="cursor:pointer">
+        <div class="shape-card" id="coneCard" onclick="goPage('page-cone')" style="cursor:pointer">
 
           <h2 class="shape-name">Cone</h2>
         <div class="shape-visual">
@@ -120,15 +120,15 @@
 <div class="topbar-actions">
   <!-- HOME -->
   <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
-    <img src="./Img/home_44428.svg" width="32" height="32" font-weight="bold" alt="Home" />
+    <img src="./Img/home_44428.svg" width="38" height="38" font-weight="bold" alt="Home" />
   </button>
   <!-- LIST -->
  <button class="icon-btn-circle" aria-label="Menu">
-  <img src="./Img/list_12596831.svg" width="28" height="28" alt="Menu" />
+ <img src="./Img/list_12596831.svg" alt="Menu" />
 </button>
   <!-- SOUND -->
   <button class="icon-btn-circle" aria-label="Sound">
-    <img src="./Img/high-volume_72596.svg" width="32" height="32" alt="Sound" />
+    <img src="./Img/high-volume_72596.svg" alt="Sound" />
   </button>
 </div>
     </header>
@@ -180,7 +180,101 @@
     </main>
 
     <footer class="page-footer">Copyright © 2026 Macmillan Education India Private Limited. All rights reserved.</footer>
-    <button class="info-btn">i</button>
+    <button class="icon-btn-circle info-btn">
+  <img src="./Img/i-icon.jpg" width="36" height="36" alt="Info" style="border-radius:50%;object-fit:cover;" />
+</button>
+  </div>
+
+  <!-- ===================== PAGE 3B: CONE SUBJECTIVE ===================== -->
+  <div id="page-cone" class="page" style="background-image: url('./Img/bg3.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <header class="topbar topbar-light">
+      <div class="logo">
+        <img src="./Img/ME_imprint_land_digital_rgb.png" alt="Logo" style="height:64px;" />
+      </div>
+ <div class="score-badge" style="display:flex;align-items:center;gap:8px;padding:10px 28px;font-size:16px;font-weight:600;color:#f8b31d;font-family:'Poppins',sans-serif;position:absolute;left:82%;transform:translateX(-50%);white-space:nowrap;">
+        <div class="star" style="background-color: rgb(245, 233, 194);">
+          <svg viewBox="0 0 24 24" fill="#f9a825" width="35" height="35">
+            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+          </svg>
+        </div>
+        <span id="coneScoreDisplay">0 /100 pts</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
+          <img src="./Img/home_44428.svg" alt="Home" />
+        </button>
+        <button class="icon-btn-circle" aria-label="Menu">
+          <img src="./Img/list_12596831.svg" alt="Menu" />
+        </button>
+        <button class="icon-btn-circle" aria-label="Sound">
+          <img src="./Img/high-volume_72596.svg" alt="Sound" />
+        </button>
+      </div>
+    </header>
+
+   <main class="question-main">
+  <div class="question-card">
+
+    <!-- Question box — identical to cube page -->
+ <div class="cone-page-title" id="conePageTitle">Fractions – Subjective Dynamic Question</div>
+
+    <div class="question-box">
+      <div class="q-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#7c6fed" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+      </div>
+      <p class="question-text" id="coneQuestionText">Loading...</p>
+    </div>
+
+    <!-- Content row — identical structure to cube page -->
+    <div class="question-content">
+
+      <!-- Visual left — same border/size as cube -->
+      <div class="visual-area" id="coneVisual"></div>
+
+      <!-- Options right — same column as cube -->
+      <div class="options-area">
+
+        <!-- Answer input -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="font-size:17px; font-weight:700; color:var(--navy); font-family:var(--font-head);">Enter your answer:</div>
+          <input type="text" class="cone-input" id="coneInput" placeholder="Example: 2/3" />
+        </div>
+
+        <!-- Check + Shuffle buttons — same row/style as cube's action-btns -->
+        <div class="action-btns">
+          <button class="shuffle-btn" id="coneShuffleBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+            Shuffle Values
+          </button>
+          <button class="solution-btn" id="coneSolutionBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            Show Solution
+          </button>
+        </div>
+
+        <!-- Check answer button — full width below -->
+        <button class="cone-check-btn" id="coneCheckBtn" style="width:100%;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="22" height="22"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+          Check Answer
+        </button>
+
+        <!-- Feedback text -->
+        <div class="cone-feedback" id="coneFeedback"></div>
+
+        <p class="shuffle-note">Shuffle changes the fraction automatically while keeping the interaction structure the same.</p>
+      </div>
+    </div>
+
+  </div><!-- end question-card -->
+
+
+
+</main>
+
+    <footer class="page-footer">Copyright © 2026 Macmillan Education India Private Limited. All rights reserved.</footer>
+    <button class="icon-btn-circle info-btn">
+ <img src="./Img/i-icon.jpg" alt="Info" style="border-radius:50%;object-fit:cover;" />
+</button>
   </div>
   
   <!-- ===================== PAGE 4: RESULTS ===================== -->
@@ -191,13 +285,13 @@
       </div>
      <div class="topbar-actions">
   <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
-    <img src="./Img/home_44428.svg" width="26" height="26" alt="Home" />
+    <img src="./Img/home_44428.svg" alt="Home" />
   </button>
   <button class="icon-btn-circle" aria-label="Menu">
-    <img src="./Img/list_12596831.svg" width="28" height="28" alt="Menu" />
+    <img src="./Img/list_12596831.svg" alt="Menu" />
   </button>
   <button class="icon-btn-circle" aria-label="Sound">
-    <img src="./Img/high-volume_72596.svg" width="26" height="26" alt="Sound" />
+    <img src="./Img/high-volume_72596.svg" alt="Sound" />
   </button>
 </div>
     </header>
@@ -322,7 +416,9 @@
 </main>
 
     <footer class="page-footer">Copyright © 2026 Macmillan Education India Private Limited. All rights reserved.</footer>
-    <button class="info-btn">i</button>
+    <button class="icon-btn-circle info-btn">
+  <img src="./Img/i-icon.jpg" width="36" height="36" alt="Info" style="border-radius:50%;object-fit:cover;" />
+</button>
   </div>
 
   <script src="./Js/app.js"></script>
