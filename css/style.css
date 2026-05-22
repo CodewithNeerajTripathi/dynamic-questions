@@ -1070,10 +1070,10 @@ svg { display: block; }
 
   /* TOPBAR */
   .topbar { padding: 10px 16px; }
-  .icon-btn-circle { width: 52px; height: 52px; }
-.icon-btn-circle img { width: 26px; height: 26px; }
-.info-btn { width: 52px !important; height: 52px !important; }
-.info-btn img { width: 26px; height: 26px; }
+.icon-btn-circle { width: 40px !important; height: 40px !important; }
+.icon-btn-circle img { width: 20px !important; height: 20px !important; }
+.info-btn { width: 40px !important; height: 40px !important; }
+.info-btn img { width: 20px !important; height: 20px !important; }
   .logo img { height: 48px !important; }
 
   /* LANDING PAGE */
@@ -1094,7 +1094,8 @@ svg { display: block; }
   .visual-area { flex: unset; width: 100%; min-height: 220px; padding: 20px; }
   .options-area { flex: unset; width: 100%; }
   .action-btns { flex-direction: row; }
-  #page-question .score-badge { left: 50%; transform: translateX(-50%); }
+  #page-question .score-badge { left: 48% !important; transform: translateX(-50%); }
+#page-cone .score-badge { left: 48% !important; transform: translateX(-50%); }
 
   /* RESULTS PAGE */
   .results-main { padding: 16px 20px; margin-top: 20px; }
@@ -1114,10 +1115,10 @@ svg { display: block; }
 
   /* TOPBAR */
   .topbar { padding: 8px 12px; }
-  .icon-btn-circle { width: 44px; height: 44px; }
-.icon-btn-circle img { width: 22px; height: 22px; }
-.info-btn { width: 44px !important; height: 44px !important; }
-.info-btn img { width: 22px; height: 22px; }
+.icon-btn-circle { width: 38px !important; height: 38px !important; }
+.icon-btn-circle img { width: 18px !important; height: 18px !important; }
+.info-btn { width: 38px !important; height: 38px !important; }
+.info-btn img { width: 18px !important; height: 18px !important; }
   .logo img { height: 40px !important; }
 
   /* LANDING PAGE */
@@ -1146,7 +1147,10 @@ svg { display: block; }
   .action-btns { flex-direction: column; gap: 8px; }
   .shuffle-btn, .solution-btn { font-size: 13px; padding: 11px 14px; }
   .shuffle-note { font-size: 10px; }
-  #page-question .score-badge { font-size: 13px; padding: 7px 16px; left: 50%; transform: translateX(-50%); }
+ #page-question .score-badge { font-size: 10px; padding: 4px 8px; left: 48% !important; transform: translateX(-50%); }
+#page-question .score-badge .star svg { width: 28px !important; height: 28px !important; }
+#page-cone .score-badge { font-size: 10px; padding: 4px 8px; left: 48% !important; transform: translateX(-50%); }
+#page-cone .score-badge .star svg { width: 28px !important; height: 28px !important; }
 
   /* SOLUTION BOX */
   .solution-box { flex-direction: column; padding: 16px; }
@@ -1248,8 +1252,8 @@ svg { display: block; }
 
 /* ===== PAGE 3 CIRCULAR ICON BUTTONS (match screenshot) ===== */
 .icon-btn-circle {
-  width: 65px;
-  height: 65px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: #ffffff;
   border: none;
@@ -1260,6 +1264,21 @@ svg { display: block; }
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
   flex-shrink: 0;
+}
+
+.icon-btn-circle img {
+  width: 30px;
+  height: 30px;
+}
+
+.info-btn {
+  width: 60px;
+  height: 60px;
+}
+
+.info-btn img {
+  width: 30px;
+  height: 30px;
 }
 .icon-btn-circle svg {
   width: 24px;
@@ -1503,12 +1522,34 @@ svg { display: block; }
   display: flex;
   gap: 0;
   align-items: center;
+  flex-wrap: nowrap;
+  width: 70%;
+  max-width: 70%;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .frac-bar-wrap {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 .frac-bar-cell {
-  width: 70px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border: 2px solid #aaa;
   border-right: none;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 1;
+  min-width: 15px;
+}
+
+@media (max-width: 600px) {
+  .frac-bar-cell {
+    width: 100%;
+    height: 40px;
+  }
 }
 .frac-bar-cell:last-child { border-right: 2px solid #aaa; }
 .frac-bar-cell.shaded { background: #c8b0e8; }
@@ -1521,14 +1562,7 @@ svg { display: block; }
   .cone-input-area { flex: unset; width: 100%; }
 }
 @media (max-width: 600px) {
-
-  
   .cone-main { padding: 10px 12px 16px; }
   .cone-btns-row { flex-direction: column; }
   .cone-page-title { font-size: 16px; }
 }
-
-.icon-btn-circle {
-  width: 35px;
-  height: 35px;}
- 

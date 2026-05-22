@@ -22,9 +22,9 @@
   <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
     <img src="./Img/home_44428.svg" alt="Home" />
   </button>
-  <button class="icon-btn-circle" id="soundBtn" aria-label="Sound">
-    <img src="./Img/high-volume_72596.svg" alt="Sound" />
-  </button>
+<button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()">
+  <img src="./Img/high-volume_72596.svg" alt="Sound" class="sound-btn-img" />
+</button>
 </div>
     </header>
 
@@ -69,9 +69,9 @@
   <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
     <img src="./Img/home_44428.svg" alt="Home" />
   </button>
-  <button class="icon-btn-circle" aria-label="Sound">
-    <img src="./Img/high-volume_72596.svg" alt="Sound" />
-  </button>
+ <button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()">
+  <img src="./Img/high-volume_72596.svg" alt="Sound" class="sound-btn-img" />
+</button>
 </div>
     </header>
 
@@ -120,16 +120,16 @@
 <div class="topbar-actions">
   <!-- HOME -->
   <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
-    <img src="./Img/home_44428.svg" width="38" height="38" font-weight="bold" alt="Home" />
+    <img src="./Img/home_44428.svg" alt="Home" />
   </button>
   <!-- LIST -->
  <button class="icon-btn-circle" aria-label="Menu">
  <img src="./Img/list_12596831.svg" alt="Menu" />
 </button>
   <!-- SOUND -->
-  <button class="icon-btn-circle" aria-label="Sound">
-    <img src="./Img/high-volume_72596.svg" alt="Sound" />
-  </button>
+<button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()">
+  <img src="./Img/high-volume_72596.svg" alt="Sound" class="sound-btn-img" />
+</button>
 </div>
     </header>
 
@@ -206,9 +206,9 @@
         <button class="icon-btn-circle" aria-label="Menu">
           <img src="./Img/list_12596831.svg" alt="Menu" />
         </button>
-        <button class="icon-btn-circle" aria-label="Sound">
-          <img src="./Img/high-volume_72596.svg" alt="Sound" />
-        </button>
+       <button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()">
+  <img src="./Img/high-volume_72596.svg" alt="Sound" class="sound-btn-img" />
+</button>
       </div>
     </header>
 
@@ -261,7 +261,7 @@
         <!-- Feedback text -->
         <div class="cone-feedback" id="coneFeedback"></div>
 
-        <p class="shuffle-note">Shuffle changes the fraction automatically while keeping the interaction structure the same.</p>
+        <p class="shuffle-note">Shuffle changes the fraction automatically while keeping the same interaction.</p>
       </div>
     </div>
 
@@ -273,7 +273,7 @@
 
     <footer class="page-footer">Copyright © 2026 Macmillan Education India Private Limited. All rights reserved.</footer>
     <button class="icon-btn-circle info-btn">
- <img src="./Img/i-icon.jpg" alt="Info" style="border-radius:50%;object-fit:cover;" />
+ <img src="./Img/i-icon.jpg" width="36" height="36" alt="Info" style="border-radius:50%;object-fit:cover;" />
 </button>
   </div>
   
@@ -290,9 +290,9 @@
   <button class="icon-btn-circle" aria-label="Menu">
     <img src="./Img/list_12596831.svg" alt="Menu" />
   </button>
-  <button class="icon-btn-circle" aria-label="Sound">
-    <img src="./Img/high-volume_72596.svg" alt="Sound" />
-  </button>
+ <button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()">
+  <img src="./Img/high-volume_72596.svg" alt="Sound" class="sound-btn-img" />
+</button>
 </div>
     </header>
 
@@ -421,6 +421,7 @@
 </button>
   </div>
 
-  <script src="./Js/app.js"></script>
+ <audio id="bgAudio" src="./sound/bg.wav" loop></audio>
+<script src="./Js/app.js"></script>
 </body>
 </html>

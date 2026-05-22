@@ -4,6 +4,32 @@
 ===================================================== */
 
 /* ===== STATE ===== */
+
+/* ===== GLOBAL AUDIO ===== */
+/* ===== GLOBAL AUDIO ===== */
+let bgAudio = null;
+let isMuted = false;
+
+function toggleSound() {
+  if (!bgAudio) return;
+  isMuted = !isMuted;
+  bgAudio.muted = isMuted;
+  document.querySelectorAll('.sound-btn-img').forEach(img => {
+    img.src = isMuted ? './Img/mute.svg' : './Img/high-volume_72596.svg';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  bgAudio = document.getElementById('bgAudio');
+  bgAudio.volume = 0.09;
+
+  // Auto play on first user interaction
+  document.addEventListener('click', () => {
+    if (bgAudio && bgAudio.paused && !isMuted) {
+      bgAudio.play().catch(() => {});
+    }
+  }, { once: true });
+});
 const state = {
   currentPage: 'page-landing',
   currentQIndex: 0,
@@ -259,7 +285,7 @@ state.questions = [];
 let pool = [...questionTemplates];
 if (state.topic === 'cube') {
   pool = questionTemplates.filter(t =>
-    ['rectangle-perimeter', 'square-perimeter', 'rectangle-area'].includes(t.type)
+    ['rectangle-area'].includes(t.type)
   );
 }
 if (state.topic === 'cone') {
@@ -267,8 +293,10 @@ if (state.topic === 'cone') {
     ['addition', 'subtraction', 'multiplication', 'division', 'fraction-simplify', 'number-line'].includes(t.type)
   );
 }
-const types = shuffle([...pool, ...pool, ...pool]).slice(0, state.totalQuestions);
-types.forEach(t => state.questions.push(t.generate()));
+while (state.questions.length < state.totalQuestions) {
+  const t = pool[Math.floor(Math.random() * pool.length)];
+  state.questions.push(t.generate());
+}
 
   updateScoreDisplay();
   loadQuestion();
@@ -429,25 +457,22 @@ document.getElementById('shuffleBtn').addEventListener('click', () => {
     state.answered = false;
     const old = document.getElementById('solutionBox');
     if (old) old.remove();
+
+    // Just shuffle the existing options, don't regenerate the question
     const currentQ = state.questions[state.currentQIndex];
-    const sameTypeTemplate = questionTemplates.find(t => t.type === currentQ.type);
-    if (sameTypeTemplate) {
-      state.questions[state.currentQIndex] = sameTypeTemplate.generate();
-    }
-    loadQuestion();
+    currentQ.options = shuffle(currentQ.options);
 
-    // Highlight correct answer after render
-    setTimeout(() => {
-      const newQ = state.questions[state.currentQIndex];
-      const allBtns = document.querySelectorAll('#optionsList .option-btn');
-      allBtns.forEach(b => {
-        if (String(b.textContent.trim()) === String(newQ.answer)) {
-          b.classList.add('correct');
-        }
-      });
-    }, 50);
+    // Re-render only the options
+    const ol = document.getElementById('optionsList');
+    ol.innerHTML = '';
+    currentQ.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = opt;
+      btn.addEventListener('click', () => handleAnswer(btn, opt, currentQ.answer));
+      ol.appendChild(btn);
+    });
   });
-
   // Solution btn
 document.getElementById('solutionBtn').addEventListener('click', () => {
     if (state.answered) return;
@@ -510,19 +535,14 @@ document.getElementById('coneCheckBtn').addEventListener('click', () => {
         </svg>
       </div>
       <div class="solution-text-wrap">
-        <div class="solution-title-row">
-          <div class="solution-title">Solution</div>
-          <button class="solution-next-btn" id="coneNextBtn">Next Question →</button>
-        </div>
+       <div class="solution-title-row">
+  <div class="solution-title">Solution</div>
+</div>
        <div class="solution-body">${coneState.solution(coneState.current.n, coneState.current.d)}</div>
       </div>`;
     const qMain = document.querySelector('#page-cone .question-main');
     qMain.appendChild(box);
-    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    document.getElementById('coneNextBtn').addEventListener('click', () => {
-      coneState.qIndex++;
-      loadConeQuestion();
-    });
+box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 
 });
@@ -555,7 +575,7 @@ function showSolutionBox(q) {
   if (old) old.remove();
   const box = document.createElement('div');
   box.id = 'solutionBox';
-  box.innerHTML = `
+box.innerHTML = `
     <div class="solution-icon-wrap">
       <svg viewBox="0 0 24 24" fill="none" stroke="#7c6fed" stroke-width="2">
         <rect x="8" y="2" width="8" height="4" rx="1"/>
@@ -566,7 +586,6 @@ function showSolutionBox(q) {
     <div class="solution-text-wrap">
       <div class="solution-title-row">
         <div class="solution-title">Solution</div>
-        <button class="solution-next-btn">Next Question →</button>
       </div>
       <div class="solution-body">${generateSolutionText(q)}</div>
     </div>`;
@@ -658,9 +677,12 @@ function loadConeQuestion() {
   updateConeScoreDisplay();
 
   const visual = document.getElementById('coneVisual');
-  let html = '<div class="frac-bar-wrap" style="flex-wrap:wrap;gap:4px;justify-content:center;">';
+const isMobile = window.innerWidth <= 600;
+const cellHeight = isMobile ? '50px' : '80px';
+const wrapWidth = isMobile ? '100%' : '80%';
+let html = `<div class="frac-bar-wrap" style="flex-wrap:nowrap;gap:0;justify-content:center;width:${wrapWidth};max-width:100%;">`;
   for (let i = 0; i < q.d; i++) {
-    html += `<div class="frac-bar-cell ${i < q.n ? 'shaded' : 'empty'}"></div>`;
+   html += `<div class="frac-bar-cell ${i < q.n ? 'shaded' : 'empty'}" style="flex:1;min-width:0;height:${cellHeight};"></div>`;
   }
   html += '</div>';
   visual.innerHTML = html;
@@ -670,44 +692,7 @@ function updateConeScoreDisplay() {
   const el = document.getElementById('coneScoreDisplay');
   if (el) el.textContent = `${coneState.score} /100 pts`;
 }
-document.addEventListener('DOMContentLoaded', () => {
- 
 
-  document.getElementById('coneShuffleBtn').addEventListener('click', () => {
-    loadConeQuestion();
-  });
-document.getElementById('coneSolutionBtn').addEventListener('click', () => {
-    const old = document.getElementById('coneSolutionBox');
-    if (old) old.remove();
-    const box = document.createElement('div');
-    box.id = 'coneSolutionBox';
-    box.className = 'solution-box';
-    box.innerHTML = `
-      <div class="solution-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#7c6fed" stroke-width="2">
-          <rect x="8" y="2" width="8" height="4" rx="1"/>
-          <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
-          <path d="M9 12l2 2 4-4"/>
-        </svg>
-      </div>
-      <div class="solution-text-wrap">
-        <div class="solution-title-row">
-          <div class="solution-title">Solution</div>
-          <button class="solution-next-btn" id="coneNextBtn">Next Question →</button>
-        </div>
-        <div class="solution-body">${coneState.solution(coneState.current.n, coneState.current.d)}</div>
-      </div>`;
-    box.className = 'solution-box';
-    const qMain = document.querySelector('#page-cone .question-main');
-    qMain.appendChild(box);
-    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    document.getElementById('coneNextBtn').addEventListener('click', () => {
-      coneState.qIndex++;
-      loadConeQuestion();
-    });
-  });
-});
 
 
 /* ===== RESULTS ===== */
