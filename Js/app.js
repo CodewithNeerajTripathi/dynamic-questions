@@ -6,7 +6,6 @@
 /* ===== STATE ===== */
 
 /* ===== GLOBAL AUDIO ===== */
-/* ===== GLOBAL AUDIO ===== */
 let bgAudio = null;
 let isMuted = false;
 
