@@ -526,13 +526,9 @@ document.getElementById('coneCheckBtn').addEventListener('click', () => {
     box.id = 'coneSolutionBox';
     box.className = 'solution-box';
     box.innerHTML = `
-      <div class="solution-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#7c6fed" stroke-width="2">
-          <rect x="8" y="2" width="8" height="4" rx="1"/>
-          <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
-          <path d="M9 12l2 2 4-4"/>
-        </svg>
-      </div>
+     <div class="solution-icon-wrap">
+      <img src="./Img/ans.png" alt="Answer" style="width:78px;height:78px;object-fit:contain;" />
+    </div>
       <div class="solution-text-wrap">
        <div class="solution-title-row">
   <div class="solution-title">Solution</div>
@@ -575,12 +571,8 @@ function showSolutionBox(q) {
   const box = document.createElement('div');
   box.id = 'solutionBox';
 box.innerHTML = `
-    <div class="solution-icon-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#7c6fed" stroke-width="2">
-        <rect x="8" y="2" width="8" height="4" rx="1"/>
-        <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/>
-        <path d="M9 12l2 2 4-4"/>
-      </svg>
+  <div class="solution-icon-wrap">
+      <img src="./Img/ans.png" alt="Answer" style="width:78px;height:78px;object-fit:contain;" />
     </div>
     <div class="solution-text-wrap">
       <div class="solution-title-row">
