@@ -15,26 +15,70 @@
   <div id="page-landing" class="page active" style="background-image: url('./Img/bg1.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <!-- Top bar -->
     <header class="topbar">
-         <div class="logo">
-  <img src="./Img/ME_imprint_land_digital_rgb.png" alt="Logo" style="height:64px;" />
+   <div class="logo">
+  <a href="https://macmillaneducation.in/" target="_blank">
+    <img src="./Img/ME_imprint_land_digital_rgb.png" alt="Macmillan Education Logo" style="height:64px;" />
+  </a>
 </div>
       <div class="topbar-actions">
-  <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
+<button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home" data-tooltip="Home">
     <img src="./Img/home_44428.svg" alt="Home" />
   </button>
-<button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()">
+<button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()" data-tooltip="Sound">
   <img src="./Img/high-volume_72596.svg" alt="Sound" class="sound-btn-img" />
 </button>
 </div>
     </header>
-
-    <!-- Background decorations -->
+<!-- Background decorations -->
     <div class="landing-bg">
       <div class="bg-blob blob1"></div>
       <div class="bg-blob blob2"></div>
       <div class="dot-grid dot-grid-left"></div>
       <div class="dot-grid dot-grid-right"></div>
-   
+    </div>
+
+    <!-- Floating icons -->
+<!-- Floating icons -->
+<div class="float-icons-wrap">
+  <div class="float-scale-wrap">
+  <img src="./Img/center.png" alt="Center" class="float-center-img" />
+      <svg class="float-connector" viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+        <!-- arc only top and sides - no bottom -->
+        <path d="M 380 560 A 180 180 0 1 1 1030 560" 
+          fill="none" stroke="#c0b8e8" stroke-width="1.5" stroke-dasharray="6,5"/>
+        <!-- start blue dot left -->
+        <circle cx="380" cy="560" r="7" fill="#4fc3f7"/>
+        <!-- end red dot right -->
+        <circle cx="1030" cy="560" r="7" fill="#e05a78"/>
+        <!-- dots on arc where icons connect -->
+        <circle cx="442" cy="369" r="5" fill="#4fc3f7"/>
+<circle cx="605" cy="251" r="5" fill="#9b8ef0"/>
+<circle cx="705" cy="235" r="5" fill="#4fc3f7"/>
+<circle cx="805" cy="251" r="5" fill="#e05a78"/>
+<circle cx="968" cy="369" r="5" fill="#9b8ef0"/>
+      </svg>
+
+      <!-- TOP CENTER -->
+      <div class="float-circle fc-chart">
+        <img src="./Img/1.png" alt="Chart" />
+      </div>
+      <!-- LEFT MIDDLE -->
+      <div class="float-circle fc-fraction">
+        <img src="./Img/2.png" alt="Fraction" />
+      </div>
+      <!-- LEFT BOTTOM -->
+      <div class="float-circle fc-question">
+        <img src="./Img/3.png" alt="Question" />
+      </div>
+      <!-- RIGHT MIDDLE -->
+      <div class="float-circle fc-pie">
+        <img src="./Img/4.png" alt="Pie" />
+      </div>
+      <!-- RIGHT BOTTOM -->
+     <div class="float-circle fc-shuffle">
+        <img src="./Img/5.png" alt="Shuffle" />
+      </div>
+  </div>
     </div>
 
     <!-- Content -->
@@ -55,21 +99,24 @@
         START
       </button>
 
-  <div class="landing-right"></div>
+ <div class="landing-right"></div>
     </main>
+  <footer class="page-footer">Copyright © 2026 Macmillan Education India Private Limited. All rights reserved.</footer>
   </div>
 
   <!-- ===================== PAGE 2: FLASHCARD (Shape Cards) ===================== -->
   <div id="page-flashcard" class="page" style="background-image: url('./Img/bg2.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <header class="topbar topbar-light">
-    <div class="logo">
-  <img src="./Img/ME_imprint_land_digital_rgb.png" alt="Logo" style="height:64px;" />
+<div class="logo">
+  <a href="https://macmillaneducation.in/" target="_blank">
+    <img src="./Img/ME_imprint_land_digital_rgb.png" alt="Macmillan Education Logo" style="height:64px;" />
+  </a>
 </div>
     <div class="topbar-actions">
-  <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
+<button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home" data-tooltip="Home">
     <img src="./Img/home_44428.svg" alt="Home" />
   </button>
- <button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()">
+ <button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()" data-tooltip="Sound">
   <img src="./Img/high-volume_72596.svg" alt="Sound" class="sound-btn-img" />
 </button>
 </div>
@@ -100,14 +147,17 @@
       </div>
 
      
-    </main>
+</main>
+  <footer class="page-footer">Copyright © 2026 Macmillan Education India Private Limited. All rights reserved.</footer>
   </div>
 
-  <!-- ===================== PAGE 3: QUESTION ===================== -->  
+  <!-- ===================== PAGE 3: QUESTION ===================== --> 
    <div id="page-question" class="page" style="background-image: url('./Img/bg3.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <header class="topbar topbar-light">
-    <div class="logo">
-  <img src="./Img/ME_imprint_land_digital_rgb.png" alt="Logo" style="height:64px;" />
+<div class="logo">
+  <a href="https://macmillaneducation.in/" target="_blank">
+    <img src="./Img/ME_imprint_land_digital_rgb.png" alt="Macmillan Education Logo" style="height:64px;" />
+  </a>
 </div>
       <div class="score-badge ">
         <div class="star" style="background-color: rgb(245, 233, 194); ">
@@ -119,15 +169,15 @@
 </div>
 <div class="topbar-actions">
   <!-- HOME -->
-  <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
+<button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home" data-tooltip="Home">
     <img src="./Img/home_44428.svg" alt="Home" />
   </button>
   <!-- LIST -->
- <button class="icon-btn-circle" aria-label="Menu">
+ <button class="icon-btn-circle" aria-label="Menu" data-tooltip="Menu">
  <img src="./Img/list_12596831.svg" alt="Menu" />
 </button>
   <!-- SOUND -->
-<button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()">
+<button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()" data-tooltip="Sound">
   <img src="./Img/high-volume_72596.svg" alt="Sound" class="sound-btn-img" />
 </button>
 </div>
@@ -198,13 +248,13 @@
         <span id="coneScoreDisplay">0 /100 pts</span>
       </div>
       <div class="topbar-actions">
-        <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
+<button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home" data-tooltip="Home">
           <img src="./Img/home_44428.svg" alt="Home" />
         </button>
-        <button class="icon-btn-circle" aria-label="Menu">
+        <button class="icon-btn-circle" aria-label="Menu" data-tooltip="Menu">
           <img src="./Img/list_12596831.svg" alt="Menu" />
         </button>
-       <button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()">
+       <button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()" data-tooltip="Sound">
   <img src="./Img/high-volume_72596.svg" alt="Sound" class="sound-btn-img" />
 </button>
       </div>
@@ -280,13 +330,13 @@
         <img src="./Img/ME_imprint_land_digital_rgb.png" alt="Logo" style="height:64px;" />
       </div>
      <div class="topbar-actions">
-  <button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home">
+<button class="icon-btn-circle" onclick="goPage('page-landing')" aria-label="Home" data-tooltip="Home">
     <img src="./Img/home_44428.svg" alt="Home" />
   </button>
-  <button class="icon-btn-circle" aria-label="Menu">
+  <button class="icon-btn-circle" aria-label="Menu" data-tooltip="Menu">
     <img src="./Img/list_12596831.svg" alt="Menu" />
   </button>
- <button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()">
+ <button class="icon-btn-circle" aria-label="Sound" onclick="toggleSound()" data-tooltip="Sound">
   <img src="./Img/high-volume_72596.svg" alt="Sound" class="sound-btn-img" />
 </button>
 </div>

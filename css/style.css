@@ -1577,3 +1577,186 @@ svg { display: block; }
   .cone-btns-row { flex-direction: column; }
   .cone-page-title { font-size: 16px; }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== FLOATING CIRCLE ICONS ===== */
+.float-icons-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.float-circle {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  background: #ffffff;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 28px rgba(100,90,200,0.15);
+  animation: floatBob 3s ease-in-out infinite;
+  padding: 14px;
+}
+.float-circle img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+/* Positions matching the image */
+.fc-fraction {
+  top: 38%;
+  left: 22%;
+  animation-delay: 0s;
+}
+/* TOP CENTER */
+.fc-chart {
+  top: 27%;
+  left: 47%;
+  animation-delay: 0s;
+}
+/* LEFT MIDDLE */
+.fc-fraction {
+  top: 30%;
+  left: 40%;
+  animation-delay: 0.5s;
+}
+/* LEFT BOTTOM */
+.fc-question {
+  top: 46%;
+  left: 28%;
+  animation-delay: 1s;
+}
+/* RIGHT MIDDLE */
+.fc-pie {
+  top: 30%;
+  right: 36%;
+  animation-delay: 1.5s;
+}
+/* RIGHT BOTTOM */
+.fc-shuffle {
+  top: 46%;
+  right: 24%;
+  animation-delay: 2s;
+}
+
+/* Hide on mobile */
+@media (max-width: 600px) {
+  .float-circle {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+  }
+  .float-circle img {
+    width: 32px;
+    height: 32px;
+  }
+  .fc-fraction { top: 35%; left: 4%; }
+  .fc-chart { top: 15%; left: 40%; }
+  .fc-pie { top: 25%; right: 4%; }
+  .fc-question { top: 55%; left: 4%; }
+  .fc-shuffle { top: 55%; right: 4%; }
+}
+
+/* ===== CONNECTOR SVG ===== */
+.float-connector {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.float-circle {
+  z-index: 4;
+}
+
+/* ===== FLOATING ICONS — PROPORTIONAL SCALING ===== */
+.float-icons-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0px;
+  margin-top: -40px;
+}
+
+.float-scale-wrap {
+  position: relative;
+  width: clamp(600px, 120vw, 1800px);
+  aspect-ratio: 2 / 1;
+  flex-shrink: 0;
+}
+.float-center-img {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(200px, 42vw, 620px);
+  height: auto;
+  object-fit: contain;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.float-connector {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.float-circle {
+  position: absolute;
+  width: clamp(44px, 6vw, 90px);
+  height: clamp(44px, 6vw, 90px);
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 28px rgba(100,90,200,0.15);
+  animation: floatBob 3s ease-in-out infinite;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+.float-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* All positions % of float-scale-wrap — matches SVG viewBox 1400×700 */
+.fc-chart    { top: 30.57%; left: 48.36%;  animation-delay: 0s;   }
+.fc-fraction { top: 36.71%; left: 34.57%;  animation-delay: 0.5s; }
+.fc-question { top: 60%;    left: 27.14%;  animation-delay: 1s;   }
+.fc-pie      { top: 36.71%; left: 61.14%;  animation-delay: 1.5s; }
+.fc-shuffle  { top: 60%;    left:70.57%;  animation-delay: 2s;   }
+
+@media (max-width: 600px) {
+  .float-icons-wrap { padding-top: 30px; }
+  .float-scale-wrap { width: 96vw; }
+  .float-connector  { display: none; }
+  .float-circle     { width: clamp(36px, 8vw, 56px); height: clamp(36px, 8vw, 56px); border-radius: 12px; }
+  .float-center-img { width: clamp(140px, 55vw, 260px); }
+  
+}
